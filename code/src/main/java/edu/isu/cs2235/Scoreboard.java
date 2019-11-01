@@ -33,7 +33,14 @@ public class Scoreboard {
      * @param entry Entry to be added.
      */
     public void add(GameEntry entry) {
-        throw new UnsupportedOperationException();
+        if(board.size() < capacity || entry.getScore() >= board.last().getScore()) {
+            int index = 0;
+            while(board.get(index) != null && entry.getScore() <= board.get(index).getScore())
+                index ++;
+            board.insert(entry, index);
+        }
+        if(board.size() > capacity)
+            board.removeLast();
     }
 
     /**
@@ -45,7 +52,9 @@ public class Scoreboard {
      * to the list size or less than zero.
      */
     public GameEntry remove(int i) throws IndexOutOfBoundsException {
-        throw new UnsupportedOperationException();
+        if(i >= capacity || i < 0)
+            throw new IndexOutOfBoundsException();
+        return board.remove(i);
     }
 
     /**
